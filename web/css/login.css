@@ -64,6 +64,16 @@ form input {
   outline: none;
   border: 1px solid #ccc;
 }
+
+form a {
+    color: #0F2FFF;
+}
+
+form a:hover {
+    
+    color:#ff5252;
+}
+
 form .help {
   margin-left: 20px;
   font-size: 0.8em;

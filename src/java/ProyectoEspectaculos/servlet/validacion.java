@@ -64,7 +64,7 @@ public class validacion extends HttpServlet {
             
             if(con.Auntenticacion(user, pass)){
                 sesion.setAttribute("usuario", user);
-                sesion.setAttribute("intento", 0);
+                sesion.removeAttribute("intento");
                 response.sendRedirect("menu.jsp");
             }else{
                 if(sesion.getAttribute("intento") == null){

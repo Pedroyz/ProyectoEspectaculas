@@ -11,30 +11,33 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Registrarse</title>
         <link rel="stylesheet" href="css/login.css">
+        <script src="js/popUp.js"></script>
     </head>
     <body>
-        
 
-        
-        
-        <form action ="validacion" method="post">
-            <header>Login</header>
+
+
+
+        <form action ="registrar" method="post">
+            <header>Registrarse</header>
             <label>Usuario <span>*</span></label>
             <input type="text" name="user" id="user"/>
-
-            <% 
+            <%
                 HttpSession sesion = request.getSession();
-                if(sesion.getAttribute("intento") != null && Integer.parseInt(sesion.getAttribute("intento").toString()) > 0){
-                   int intento = Integer.parseInt(sesion.getAttribute("intento").toString());
-            %>
-            <div class="help">Contraseña errónea, intento numero <%=intento%> </div>
-            <% } %>
-            
-            <label>Contraseña <span>*</span></label>
-            <input type="password" name="pass" id="pass"/>
-            <div class="help">La contraseña diferencia mayusculas de minusculas</div>
-            <button type="submit" name="Entrar" id="Entrar" value="Entrar">Login</button>
+                String alerta = sesion.getAttribute("error").toString();
+                if (alerta != null && alerta.length() > 0) {
 
-        </form>
-    </body>
+            %>
+
+
+            <script type="text/javascript">MensajeAlerta("Error al insertar el usuario");</script>
+            <div class="error">Error: <%=alerta%> </div></p>
+            <% }%>
+
+        <label>Contraseña <span>*</span></label>
+        <input type="password" name="pass" id="pass"/>
+        <div class="help">La contraseña diferencia mayusculas de minusculas</div>
+        <button type="submit" name="Entrar" id="Entrar" value="Entrar">Registrarse</button>
+    </form>
+</body>
 </html>
