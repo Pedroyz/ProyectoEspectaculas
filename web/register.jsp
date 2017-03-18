@@ -24,9 +24,8 @@
             <input type="text" name="user" id="user"/>
             <%
                 HttpSession sesion = request.getSession();
+                if (sesion.getAttribute("error") != null && sesion.getAttribute("error").toString().length() > 0) {
                 String alerta = sesion.getAttribute("error").toString();
-                if (alerta != null && alerta.length() > 0) {
-
             %>
 
 
