@@ -12,14 +12,15 @@ import java.sql.Date;
  * @author Pedro
  */
 public class Espectaculo {
-    int     idEspectaculo;
-    String  nombre;
-    String  Descripcion;
-    Date    fecha;
+
+    int idEspectaculo;
+    String nombre;
+    String Descripcion;
+    Date fecha;
 
     public Espectaculo() {
     }
-   
+
     public int getIdEspectaculo() {
         return idEspectaculo;
     }
@@ -35,7 +36,7 @@ public class Espectaculo {
     public Date getFecha() {
         return fecha;
     }
-
+    
     public void setIdEspectaculo(int idEspectaculo) {
         this.idEspectaculo = idEspectaculo;
     }
@@ -51,10 +52,9 @@ public class Espectaculo {
     public void setFecha(Date fecha) {
         this.fecha = fecha;
     }
-    
-    
-    
-    
-    
-}
 
+
+    
+    
+   
+}

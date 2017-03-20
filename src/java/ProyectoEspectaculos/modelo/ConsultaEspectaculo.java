@@ -91,17 +91,16 @@ public class ConsultaEspectaculo extends ConexionBBDD {
 
                 int numCambios = st.executeUpdate(update);
 
-                
                 //Si por alguna razon no se ha comprado bién, decimos que se elimine la compra del usuario
                 if (numCambios != cantidad) {
-                    
-                    update = "UPDATE silla SET usuarioId = NULL where usuarioId = \""+usuario+"\" idSilla in ( " + rs.getInt("idSilla");
+
+                    update = "UPDATE silla SET usuarioId = NULL where usuarioId = \"" + usuario + "\" idSilla in ( " + rs.getInt("idSilla");
                     while (rs.next()) {
                         update = update.concat(", " + rs.getInt("idSilla"));
                     }
                     update = update.concat(")");
                     numCambios = st.executeUpdate(update);
-                    
+
                     return false;
 
                 }
@@ -118,7 +117,35 @@ public class ConsultaEspectaculo extends ConexionBBDD {
         }
         return true;
     }
-    
-    
+
+    public LinkedList<EspectaculosComprados> getEspectaculosComprados(String user) throws SQLException {
+        LinkedList<EspectaculosComprados> listaEspectaculos = new LinkedList<>();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = null;
+            String consulta = "SELECT idespectaculo, Titulo, Descripcion, Fecha, tipo, precio, count(idSilla) as numSillas FROM espectaculo " +
+            "inner join silla on espectaculo.idespectaculo = silla.espectaculoId " +
+            "where usuarioId = \""+user+"\" " +
+            "group by idespectaculo, Titulo, Descripcion, Fecha, tipo, precio;";
+            rs = st.executeQuery(consulta);
+            while (rs.next()) {
+                EspectaculosComprados espectaculo = new EspectaculosComprados();
+                espectaculo.setIdEspectaculo(rs.getInt("idespectaculo"));
+                espectaculo.setNombre(rs.getString("Titulo"));
+                espectaculo.setDescripcion(rs.getString("Descripcion"));
+                espectaculo.setFecha(rs.getDate("Fecha"));
+                espectaculo.setPrecio(rs.getInt("precio"));
+                espectaculo.setTipo(rs.getString("tipo"));
+                espectaculo.setNumsillas(rs.getInt("numSillas"));
+                
+                listaEspectaculos.add(espectaculo);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            System.err.println("Error consulta sql");
+        }
+        return listaEspectaculos;
+    }
 
 }
