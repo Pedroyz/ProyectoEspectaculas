@@ -23,7 +23,7 @@
                 HttpSession sesion = request.getSession();
                 if (sesion.getAttribute("usuario") != null && sesion.getAttribute("usuario").toString().length() > 0) {
                     String usuario = sesion.getAttribute("usuario").toString();
-                    out.println("<a id=\"logo-header\" href=\"#\"><span class=\"site-name\"> Bienvenido " + usuario + "</span></href>");
+                    out.println("<a id=\"logo-header\" href=\"menu.jsp\"><span class=\"site-name\"> Bienvenido " + usuario + "</span></href>");
                 } else {
                     response.sendRedirect("index.jsp");
                 }
@@ -31,26 +31,15 @@
 
             <nav>
                 <ul>
-                    <li> <a href="comprado.jsp" >Entradas mias</a><li>
-                    <li> <a href="salir" >Salir</a><li>
+                    <li> <a href="salir" type="submit" name="salir" id="Boton" value="salir">Salir</a><li>
                 </ul>
             </nav>
        </header>
-            <%
-                if (sesion.getAttribute("error") != null && sesion.getAttribute("error").toString().length() > 0) {
-                    String alerta = sesion.getAttribute("error").toString();
-            %>
-
-
-            <script type="text/javascript">MensajeAlerta("Error al comprar la entrada");</script>
-            <div class="error">Error: <%=alerta%> </div></p>
-            <% }%>
     
-
     <section id="main-content">
         <article>
             <div class="table-title">
-                <h3>Espectaculos disponibles</h3>
+                <h3>Espectaculos comprados</h3>
             </div>
             <table class="table-fill">
                 <thead>

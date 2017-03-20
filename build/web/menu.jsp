@@ -18,28 +18,37 @@
         <title>Espectaculos</title>
     </head>
     <body>
-        <div>
+        <header id="main-header">
             <%
                 HttpSession sesion = request.getSession();
                 if (sesion.getAttribute("usuario") != null && sesion.getAttribute("usuario").toString().length() > 0) {
                     String usuario = sesion.getAttribute("usuario").toString();
-                    out.println("<p> Bienvenido " + usuario + "</p>");
+                    out.println("<a id=\"logo-header\" href=\"#\"><span class=\"site-name\"> Bienvenido " + usuario + "</span></href>");
                 } else {
                     response.sendRedirect("index.jsp");
                 }
             %>
-            
-            
-                       <%
+
+            <nav>
+                <ul>
+                    <li> <a href="comprado.jsp" >Entradas mias</a><li>
+                    <li> <a href="salir" >Salir</a><li>
+                </ul>
+            </nav>
+       </header>
+            <%
                 if (sesion.getAttribute("error") != null && sesion.getAttribute("error").toString().length() > 0) {
-                String alerta = sesion.getAttribute("error").toString();
+                    String alerta = sesion.getAttribute("error").toString();
             %>
 
 
             <script type="text/javascript">MensajeAlerta("Error al comprar la entrada");</script>
             <div class="error">Error: <%=alerta%> </div></p>
             <% }%>
+    
 
+    <section id="main-content">
+        <article>
             <div class="table-title">
                 <h3>Espectaculos disponibles</h3>
             </div>
@@ -59,12 +68,12 @@
                         LinkedList<Espectaculo> lista = cons.getEspectaculos();
                         for (int i = 0; i < lista.size(); i++) {
                             out.println("<form  action =\"DetalleEspectaculo.jsp\" method=\"post\">");
-                            
-                            out.println("<input type=\"hidden\" name=\"idespectaculo\" value= \""+lista.get(i).getIdEspectaculo()+"\">");
-                            out.println("<input type=\"hidden\" name=\"nombreespectaculo\" value=\""+lista.get(i).getNombre()+"\">");
-                            out.println("<input type=\"hidden\" name=\"descripcionespectaculo\" value=\""+lista.get(i).getDescripcion()+"\">");
-                            out.println("<input type=\"hidden\" name=\"fechaespectaculo\" value=\""+lista.get(i).getFecha()+"\">");
-                            
+
+                            out.println("<input type=\"hidden\" name=\"idespectaculo\" value= \"" + lista.get(i).getIdEspectaculo() + "\">");
+                            out.println("<input type=\"hidden\" name=\"nombreespectaculo\" value=\"" + lista.get(i).getNombre() + "\">");
+                            out.println("<input type=\"hidden\" name=\"descripcionespectaculo\" value=\"" + lista.get(i).getDescripcion() + "\">");
+                            out.println("<input type=\"hidden\" name=\"fechaespectaculo\" value=\"" + lista.get(i).getFecha() + "\">");
+
                             out.println("<tr>");
                             out.println("<td class=\"text-left\">" + lista.get(i).getIdEspectaculo() + "</td>");
                             out.println("<td class=\"text-left\">" + lista.get(i).getNombre() + "</td>");
@@ -77,6 +86,7 @@
                     %>
                 </tbody>
             </table>
-        </div>
-    </body>
+        </article>
+    </section>>
+</body>
 </html>

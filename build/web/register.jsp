@@ -13,7 +13,7 @@
         <link rel="stylesheet" href="css/login.css">
         <script src="js/popUp.js"></script>
     </head>
-    <body>
+    <body class="login">
 
 
 
@@ -25,11 +25,8 @@
             <%
                 HttpSession sesion = request.getSession();
                 if (sesion.getAttribute("error") != null && sesion.getAttribute("error").toString().length() > 0) {
-                String alerta = sesion.getAttribute("error").toString();
+                    String alerta = sesion.getAttribute("error").toString();
             %>
-
-
-            <script type="text/javascript">MensajeAlerta("Error al insertar el usuario");</script>
             <div class="error">Error: <%=alerta%> </div></p>
             <% }%>
 
@@ -37,6 +34,16 @@
         <input type="password" name="pass" id="pass"/>
         <div class="help">La contraseña diferencia mayusculas de minusculas</div>
         <button type="submit" name="Entrar" id="Entrar" value="Entrar">Registrarse</button>
+        <p class="help"><a href="index.jsp">Volver inicio sesión</a></p>
     </form>
 </body>
+
+<%
+    if (sesion.getAttribute("error") != null && sesion.getAttribute("error").toString().length() > 0) {
+        String alerta = sesion.getAttribute("error").toString();
+        sesion.removeAttribute("error");
+%>
+<script type="text/javascript">MensajeAlerta("Error al insertar el usuario");</script>
+<% }%>
+
 </html>
