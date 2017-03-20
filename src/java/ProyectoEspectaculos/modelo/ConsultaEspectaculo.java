@@ -81,24 +81,21 @@ public class ConsultaEspectaculo extends ConexionBBDD {
 
             if (rs.next()) {
 
-                String update = "UPDATE silla SET usuarioId = \"" + usuario + "\" where usuarioId IS NULL and idSilla in ( " + rs.getInt("idSilla");
+                String update = "UPDATE silla SET usuarioId = \"" + usuario + "\" where usuarioId IS NULL and idSilla in ( ";
+                String sillas = String.valueOf(rs.getInt("idSilla"));
 
                 while (rs.next()) {
-                    update = update.concat(", " + rs.getInt("idSilla"));
+                    sillas = sillas.concat(", " + rs.getInt("idSilla"));
                 }
 
-                update = update.concat(")");
+                update = update.concat(sillas + ")");
 
                 int numCambios = st.executeUpdate(update);
 
                 //Si por alguna razon no se ha comprado bién, decimos que se elimine la compra del usuario
                 if (numCambios != cantidad) {
 
-                    update = "UPDATE silla SET usuarioId = NULL where usuarioId = \"" + usuario + "\" idSilla in ( " + rs.getInt("idSilla");
-                    while (rs.next()) {
-                        update = update.concat(", " + rs.getInt("idSilla"));
-                    }
-                    update = update.concat(")");
+                    update = "UPDATE silla SET usuarioId = NULL where usuarioId = \"" + usuario + "\" and idSilla in ( " + sillas + ")";
                     numCambios = st.executeUpdate(update);
 
                     return false;
@@ -147,5 +144,13 @@ public class ConsultaEspectaculo extends ConexionBBDD {
         }
         return listaEspectaculos;
     }
-
+/*
+    public static void main (String argv []) throws SQLException{
+    
+        ConsultaEspectaculo con = new ConsultaEspectaculo();
+        System.out.println(con.comprarSillas(2, "NORMAL", 30, "pedro"));
+    
+    
+    }
+    */
 }
