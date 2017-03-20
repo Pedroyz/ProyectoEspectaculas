@@ -54,6 +54,7 @@ public class registrar extends HttpServlet {
             } else {
                 if (con.Registrarse(user, pass)) {
                     sesion.removeAttribute("error");
+                    sesion.setAttribute("usuario", user);
                     response.sendRedirect("menu.jsp");
                 } else {
                     sesion.setAttribute("error", "Error desconocido en la bbdd");

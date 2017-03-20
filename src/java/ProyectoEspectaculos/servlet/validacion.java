@@ -72,6 +72,7 @@ public class validacion extends HttpServlet {
                 }else{
                     sesion.setAttribute("intento", (int) sesion.getAttribute("intento") + 1);
                 }
+                sesion.removeAttribute("usuario");
                 response.sendRedirect("index.jsp");
             }
             

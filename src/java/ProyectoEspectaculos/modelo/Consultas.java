@@ -19,7 +19,6 @@ public class Consultas extends ConexionBBDD{
 
     public Consultas() throws SQLException {
         super();
-    
     }
     
     public boolean Auntenticacion (String user, String pass) throws SQLException{

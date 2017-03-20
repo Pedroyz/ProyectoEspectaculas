@@ -1,18 +1,63 @@
 <%-- 
-    Document   : menu
-    Created on : 17-mar-2017, 1:12:21
+    Document   : espectaculos
+    Created on : 20-mar-2017, 11:46:10
     Author     : Pedro
 --%>
 
+
+<%@page import="ProyectoEspectaculos.modelo.ConsultaEspectaculo"%>
 <%@page contentType="text/html" pageEncoding="UTF-8"%>
+<%@page language="java" %>
+<%@page import="ProyectoEspectaculos.modelo.Espectaculo"%> 
+<%@page import="java.util.LinkedList"%> 
 <!DOCTYPE html>
 <html>
     <head>
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-        <title>Menu principal</title>
         <link rel="stylesheet" href="css/login.css">
+        <title>Espectaculos</title>
     </head>
     <body>
-        <h1>Codigo Menu Principal</h1>
+        <div>
+            <%
+                HttpSession sesion = request.getSession();
+                if (sesion.getAttribute("usuario") != null && sesion.getAttribute("usuario").toString().length() > 0) {
+                    String usuario = sesion.getAttribute("usuario").toString();
+                    out.println("<p> Bienvenido " + usuario + "</p>");
+                } else {
+                    response.sendRedirect("index.jsp");
+                }
+            %>
+
+            <div class="table-title">
+                <h3>Espectaculos disponibles</h3>
+            </div>
+            <table class="table-fill">
+                <thead>
+                    <tr>
+                        <th class="text-left">id</th>
+                        <th class="text-left">nombre</th>
+                        <th class="text-left">descripcion</th>
+                        <th class="text-left">fecha</th>
+                        <th class="text-left">detalle</th>
+                    </tr>
+                </thead>
+                <tbody class="table-hover">
+                    <%
+                        ConsultaEspectaculo cons = new ConsultaEspectaculo();
+                        LinkedList<Espectaculo> lista = cons.getEspectaculos();
+                        for (int i = 0; i < lista.size(); i++) {
+                            out.println("<tr>");
+                            out.println("<td class=\"text-left\">" + lista.get(i).getIdEspectaculo() + "</td>");
+                            out.println("<td class=\"text-left\">" + lista.get(i).getNombre() + "</td>");
+                            out.println("<td class=\"text-left\">" + lista.get(i).getDescripcion() + "</td>");
+                            out.println("<td class=\"text-left\">" + lista.get(i).getFecha() + "</td>");
+                            out.println("<td class=\"text-left\"><button> Ver destalles</button></td>");
+                            out.println("</tr>");
+                        }
+                    %>
+                </tbody>
+            </table>
+        </div>
     </body>
 </html>
