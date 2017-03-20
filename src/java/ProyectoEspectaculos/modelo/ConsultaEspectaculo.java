@@ -49,4 +49,36 @@ public class ConsultaEspectaculo extends ConexionBBDD{
         return listaEspectaculos;
     }
     
+    
+        public LinkedList <Silla> getSillas(int idespectaculo) throws SQLException
+    {
+       
+        
+        LinkedList <Silla> listaSillas =  new LinkedList <>();
+        try
+        {
+            Statement st = con.createStatement();
+            ResultSet rs = null;
+            String consulta = "SELECT tipo, COUNT(*) as numSillas, precio " +
+"FROM silla where usuarioId IS NULL and espectaculoId = "+idespectaculo +" group by espectaculoId, tipo, precio;";
+            rs = st.executeQuery(consulta);
+            while (rs.next())
+            {
+                Silla silla = new Silla();
+                silla.setIdEspectaculo(idespectaculo);
+                silla.setNumeroLibres(rs.getInt("numSillas"));
+                silla.setPrecio(rs.getInt("precio"));
+                silla.setTipo(rs.getString("tipo"));
+                listaSillas.add(silla);                
+            }
+            rs.close();
+            st.close();
+        }catch(SQLException e)
+        {
+            System.err.println("Error consulta sql");
+        }
+        return listaSillas;
+    }
+    
+    
 }

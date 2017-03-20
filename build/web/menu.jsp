@@ -47,13 +47,21 @@
                         ConsultaEspectaculo cons = new ConsultaEspectaculo();
                         LinkedList<Espectaculo> lista = cons.getEspectaculos();
                         for (int i = 0; i < lista.size(); i++) {
+                            out.println("<form  action =\"DetalleEspectaculo.jsp\" method=\"post\">");
+                            
+                            out.println("<input type=\"hidden\" name=\"idespectaculo\" value= \""+lista.get(i).getIdEspectaculo()+"\">");
+                            out.println("<input type=\"hidden\" name=\"nombreespectaculo\" value=\""+lista.get(i).getNombre()+"\">");
+                            out.println("<input type=\"hidden\" name=\"descripcionespectaculo\" value=\""+lista.get(i).getDescripcion()+"\">");
+                            out.println("<input type=\"hidden\" name=\"fechaespectaculo\" value=\""+lista.get(i).getFecha()+"\">");
+                            
                             out.println("<tr>");
                             out.println("<td class=\"text-left\">" + lista.get(i).getIdEspectaculo() + "</td>");
                             out.println("<td class=\"text-left\">" + lista.get(i).getNombre() + "</td>");
                             out.println("<td class=\"text-left\">" + lista.get(i).getDescripcion() + "</td>");
                             out.println("<td class=\"text-left\">" + lista.get(i).getFecha() + "</td>");
-                            out.println("<td class=\"text-left\"><button> Ver destalles</button></td>");
+                            out.println("<td class=\"text-left\"><button  type=\"submit\" name=\"Detalle\" id=\"Boton\" value=\"Detalle\"> Ver destalles</button></td>");
                             out.println("</tr>");
+                            out.println("</form>");
                         }
                     %>
                 </tbody>
