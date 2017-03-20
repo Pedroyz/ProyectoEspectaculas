@@ -5,11 +5,10 @@
  */
 package ProyectoEspectaculos.servlet;
 
-import ProyectoEspectaculos.modelo.Consultas;
+import ProyectoEspectaculos.modelo.ConsultaEspectaculo;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.sql.SQLException;
-import java.util.Enumeration;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.servlet.ServletException;
@@ -23,9 +22,8 @@ import javax.servlet.http.HttpSession;
  *
  * @author Pedro
  */
-
-@WebServlet(name = "validacion", urlPatterns = {"/validacion"})
-public class validacion extends HttpServlet {
+@WebServlet(name = "comprarEntradas", urlPatterns = {"/comprarEntradas"})
+public class comprarEntradas extends HttpServlet {
 
     /**
      * Processes requests for both HTTP <code>GET</code> and <code>POST</code>
@@ -35,40 +33,43 @@ public class validacion extends HttpServlet {
      * @param response servlet response
      * @throws ServletException if a servlet-specific error occurs
      * @throws IOException if an I/O error occurs
-     * @throws java.sql.SQLException
      */
     protected void processRequest(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException, SQLException {
         response.setContentType("text/html;charset=UTF-8");
         try (PrintWriter out = response.getWriter()) {
             /* TODO output your page here. You may use following sample code. */
-            
+
             HttpSession sesion = request.getSession();
-            
-            String user = request.getParameter("user");
-            String pass = request.getParameter("pass");
-                      
-            Consultas con = new Consultas();
-            
-            if(con.Auntenticacion(user, pass)){
-                sesion.setAttribute("usuario", user);
-                sesion.removeAttribute("intento");
-                response.sendRedirect("menu.jsp");
-            }else{
-                if(sesion.getAttribute("intento") == null){
-                    sesion.setAttribute("intento", 1);
-                }else{
-                    sesion.setAttribute("intento", (int) sesion.getAttribute("intento") + 1);
-                }
-                sesion.removeAttribute("usuario");
+
+            if (sesion.getAttribute("usuario") == null || sesion.getAttribute("usuario").toString().length() <= 0) {
                 response.sendRedirect("index.jsp");
             }
+
+            if (request.getParameter("idespectaculo") == null || request.getParameter("cantidad") == null || request.getParameter("tipoSilla") == null) {
+                sesion.setAttribute("error", "Error al enviar parametros");
+                response.sendRedirect("menu.jsp");
+            }
+
+            String user = sesion.getAttribute("usuario").toString();
+            int cantidad = Integer.parseInt(request.getParameter("cantidad"));
+            int idespectaculo = Integer.parseInt(request.getParameter("idespectaculo"));
+            String tipoSilla = request.getParameter("tipoSilla");
+
+            ConsultaEspectaculo con = new ConsultaEspectaculo();
             
+
+            if (con.comprarSillas(idespectaculo, tipoSilla, cantidad, user)) {
+                sesion.removeAttribute("error");
+            } else {
+                 sesion.setAttribute("error", "Error al comprar las entradas");
+            }
             
+            response.sendRedirect("menu.jsp");
         }
     }
-
     // <editor-fold defaultstate="collapsed" desc="HttpServlet methods. Click on the + sign on the left to edit the code.">
+
     /**
      * Handles the HTTP <code>GET</code> method.
      *
@@ -114,5 +115,6 @@ public class validacion extends HttpServlet {
     public String getServletInfo() {
         return "Short description";
     }// </editor-fold>
+
 
 }

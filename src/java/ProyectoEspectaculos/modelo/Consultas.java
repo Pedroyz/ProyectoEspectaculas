@@ -86,10 +86,4 @@ public class Consultas extends ConexionBBDD{
         return false;
     
     }
-   /* public static void main(String[] args) throws SQLException {
-        Consultas coon = new Consultas();
-        System.out.println(coon.Auntenticacion("Pedro", "pedro"));
-    }*/
-    
-    
 }

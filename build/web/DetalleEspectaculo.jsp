@@ -21,6 +21,11 @@
     </head>
     <body>
         <div>
+            
+ 
+            
+            
+            
             <%
                 HttpSession sesion = request.getSession();
                 if (sesion.getAttribute("usuario") != null && sesion.getAttribute("usuario").toString().length() > 0) {
@@ -42,7 +47,8 @@
             %>
 
             <div class="table-title">
-                <h3>Espectaculo <%=nombreespectaculo%> Fecha: <%=fechaespectaculo%></h3>
+                <h3>Espectaculo <%=nombreespectaculo%></h3>
+                <h2>Fecha: <%=fechaespectaculo%></h2>
                 <p>Descripcion:</p>
                 <p><%=descripcionespectaculo%></p>
             </div>
@@ -61,13 +67,17 @@
                         ConsultaEspectaculo cons = new ConsultaEspectaculo();
                         LinkedList<Silla> lista = cons.getSillas(idespectaculo);
                         for (int i = 0; i < lista.size(); i++) {
+                            out.println("<form  action =\"comprarEntradas\" method=\"post\">");
                             out.println("<tr>");
+                            out.println("<input type=\"hidden\" name=\"idespectaculo\" value=\""+idespectaculo+"\">");
+                            out.println("<input type=\"hidden\" name=\"tipoSilla\" value=\""+lista.get(i).getTipo()+"\">");
                             out.println("<td class=\"text-left\">" + lista.get(i).getTipo()+ "</td>");
                             out.println("<td class=\"text-left\">" + lista.get(i).getNumeroLibres() + "</td>");
                             out.println("<td class=\"text-left\">" + lista.get(i).getPrecio()+ "</td>");
                             out.println("<td class=\"text-left\"><input type=\"number\" name=\"cantidad\" min=\"0\" max=\""+ lista.get(i).getNumeroLibres() +"\"/></td>");
-                            out.println("<td class=\"text-left\"><button>Comprar</button></td>");
+                            out.println("<td class=\"text-left\"><button  type=\"submit\" name=\"Comprar\" id=\"Boton\" value=\"Comprar\"> Comprar</button></td>");
                             out.println("</tr>");
+                            out.println("</form>");
                         }
                     %>
                 </tbody>

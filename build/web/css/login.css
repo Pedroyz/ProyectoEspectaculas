@@ -128,7 +128,25 @@ div.table-title {
    text-transform:uppercase;
 }
 
+.table-title h2 {
+   color: #fafafa;
+   font-size: 18px;
+   font-weight: 400;
+   font-style:normal;
+   font-family: "Roboto", helvetica, arial, sans-serif;
+   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+   text-transform:uppercase;
+}
 
+.table-title h1 {
+   color: #fafafa;
+   font-size: 40px;
+   font-weight: 400;
+   font-style:normal;
+   font-family: "Roboto", helvetica, arial, sans-serif;
+   text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+   text-transform:uppercase;
+}
 /*** Table Styles **/
 
 .table-fill {

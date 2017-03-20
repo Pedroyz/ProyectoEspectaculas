@@ -14,71 +14,111 @@ import java.util.LinkedList;
  *
  * @author Pedro
  */
-public class ConsultaEspectaculo extends ConexionBBDD{
+public class ConsultaEspectaculo extends ConexionBBDD {
 
     public ConsultaEspectaculo() throws SQLException {
         super();
     }
-    
-    
-    
-    public LinkedList <Espectaculo> getEspectaculos() throws SQLException
-    {
-        LinkedList <Espectaculo> listaEspectaculos =  new LinkedList <>();
-        try
-        {
+
+    public LinkedList<Espectaculo> getEspectaculos() throws SQLException {
+        LinkedList<Espectaculo> listaEspectaculos = new LinkedList<>();
+        try {
             Statement st = con.createStatement();
             ResultSet rs = null;
             String consulta = "SELECT * FROM espectaculo order by Fecha;";
             rs = st.executeQuery(consulta);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 Espectaculo espectaculo = new Espectaculo();
                 espectaculo.setIdEspectaculo(rs.getInt("idespectaculo"));
                 espectaculo.setNombre(rs.getString("Titulo"));
                 espectaculo.setDescripcion(rs.getString("Descripcion"));
                 espectaculo.setFecha(rs.getDate("Fecha"));
-                listaEspectaculos.add(espectaculo);                
+                listaEspectaculos.add(espectaculo);
             }
             rs.close();
             st.close();
-        }catch(SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println("Error consulta sql");
         }
         return listaEspectaculos;
     }
-    
-    
-        public LinkedList <Silla> getSillas(int idespectaculo) throws SQLException
-    {
-       
-        
-        LinkedList <Silla> listaSillas =  new LinkedList <>();
-        try
-        {
+
+    public LinkedList<Silla> getSillas(int idespectaculo) throws SQLException {
+
+        LinkedList<Silla> listaSillas = new LinkedList<>();
+        try {
             Statement st = con.createStatement();
             ResultSet rs = null;
-            String consulta = "SELECT tipo, COUNT(*) as numSillas, precio " +
-"FROM silla where usuarioId IS NULL and espectaculoId = "+idespectaculo +" group by espectaculoId, tipo, precio;";
+            String consulta = "SELECT tipo, COUNT(*) as numSillas, precio "
+                    + "FROM silla where usuarioId IS NULL and espectaculoId = " + idespectaculo + " group by espectaculoId, tipo, precio;";
             rs = st.executeQuery(consulta);
-            while (rs.next())
-            {
+            while (rs.next()) {
                 Silla silla = new Silla();
                 silla.setIdEspectaculo(idespectaculo);
                 silla.setNumeroLibres(rs.getInt("numSillas"));
                 silla.setPrecio(rs.getInt("precio"));
                 silla.setTipo(rs.getString("tipo"));
-                listaSillas.add(silla);                
+                listaSillas.add(silla);
             }
             rs.close();
             st.close();
-        }catch(SQLException e)
-        {
+        } catch (SQLException e) {
             System.err.println("Error consulta sql");
         }
         return listaSillas;
     }
+
+    public boolean comprarSillas(int idespectaculo, String tipoSilla, int cantidad, String usuario) throws SQLException {
+
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = null;
+
+            //primero seleccinamos las sillas que vamos a comprar
+            String consulta = "SELECT idSilla FROM espectaculos.silla where usuarioId IS NULL and espectaculoId = " + idespectaculo + " AND tipo = \"" + tipoSilla + "\""
+                    + "limit " + cantidad + ";";
+            rs = st.executeQuery(consulta);
+
+            if (rs.next()) {
+
+                String update = "UPDATE silla SET usuarioId = \"" + usuario + "\" where usuarioId IS NULL and idSilla in ( " + rs.getInt("idSilla");
+
+                while (rs.next()) {
+                    update = update.concat(", " + rs.getInt("idSilla"));
+                }
+
+                update = update.concat(")");
+
+                int numCambios = st.executeUpdate(update);
+
+                
+                //Si por alguna razon no se ha comprado bién, decimos que se elimine la compra del usuario
+                if (numCambios != cantidad) {
+                    
+                    update = "UPDATE silla SET usuarioId = NULL where usuarioId = \""+usuario+"\" idSilla in ( " + rs.getInt("idSilla");
+                    while (rs.next()) {
+                        update = update.concat(", " + rs.getInt("idSilla"));
+                    }
+                    update = update.concat(")");
+                    numCambios = st.executeUpdate(update);
+                    
+                    return false;
+
+                }
+
+                rs.close();
+                st.close();
+            } else {
+                return false;
+            }
+
+        } catch (SQLException e) {
+            System.err.println("Error consulta sql");
+            return false;
+        }
+        return true;
+    }
     
     
+
 }

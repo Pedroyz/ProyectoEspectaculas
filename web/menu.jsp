@@ -28,6 +28,17 @@
                     response.sendRedirect("index.jsp");
                 }
             %>
+            
+            
+                       <%
+                if (sesion.getAttribute("error") != null && sesion.getAttribute("error").toString().length() > 0) {
+                String alerta = sesion.getAttribute("error").toString();
+            %>
+
+
+            <script type="text/javascript">MensajeAlerta("Error al comprar la entrada");</script>
+            <div class="error">Error: <%=alerta%> </div></p>
+            <% }%>
 
             <div class="table-title">
                 <h3>Espectaculos disponibles</h3>
