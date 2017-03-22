@@ -74,6 +74,8 @@ public class ConsultaEspectaculo extends ConexionBBDD {
             Statement st = con.createStatement();
             ResultSet rs = null;
 
+            if(cantidad <=0 )
+                return false;
             //primero seleccinamos las sillas que vamos a comprar
             String consulta = "SELECT idSilla FROM espectaculos.silla where usuarioId IS NULL and espectaculoId = " + idespectaculo + " AND tipo = \"" + tipoSilla + "\""
                     + "limit " + cantidad + ";";

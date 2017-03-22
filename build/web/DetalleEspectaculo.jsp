@@ -88,7 +88,7 @@
                                 out.println("<td class=\"text-left\">" + lista.get(i).getTipo() + "</td>");
                                 out.println("<td class=\"text-left\">" + lista.get(i).getNumeroLibres() + "</td>");
                                 out.println("<td class=\"text-left\">" + lista.get(i).getPrecio() + "</td>");
-                                out.println("<td class=\"text-left\"><input type=\"number\" name=\"cantidad\" min=\"0\" max=\"" + lista.get(i).getNumeroLibres() + "\"/></td>");
+                                out.println("<td class=\"text-left\"><input type=\"number\" name=\"cantidad\" min=\"1\" max=\"" + lista.get(i).getNumeroLibres() + "\" required/></td>");
                                 out.println("<td class=\"text-left\"><button  type=\"submit\" name=\"Comprar\" id=\"Boton\" value=\"Comprar\"> Comprar</button></td>");
                                 out.println("</tr>");
                                 out.println("</form>");
