@@ -25,7 +25,7 @@
                 HttpSession sesion = request.getSession();
                 if (sesion.getAttribute("usuario") != null && sesion.getAttribute("usuario").toString().length() > 0) {
                     String usuario = sesion.getAttribute("usuario").toString();
-                    out.println("<a id=\"logo-header\" href=\"menu.jsp\"><span class=\"site-name\"> Bienvenido " + usuario + "</span></href>");
+                    out.println("<a id=\"logo-header\" href=\"menu.jsp\"><span class=\"site-name\"> Bienvenido " + usuario + "</span></a>");
                 } else {
                     response.sendRedirect("index.jsp");
                 }
@@ -56,6 +56,12 @@
                     String nombreespectaculo = request.getParameter("nombreespectaculo");
                     String descripcionespectaculo = request.getParameter("descripcionespectaculo");
                     String fechaespectaculo = request.getParameter("fechaespectaculo");
+                    
+
+                    ConsultaEspectaculo cons = new ConsultaEspectaculo();
+                    LinkedList<Silla> lista = cons.getSillas(idespectaculo);
+                    
+                    if(lista.size() > 0){
 
 
                 %>
@@ -78,8 +84,6 @@
                     </thead>
                     <tbody class="table-hover">
                         <%
-                            ConsultaEspectaculo cons = new ConsultaEspectaculo();
-                            LinkedList<Silla> lista = cons.getSillas(idespectaculo);
                             for (int i = 0; i < lista.size(); i++) {
                                 out.println("<form  action =\"comprarEntradas\" method=\"post\">");
                                 out.println("<tr>");
@@ -96,6 +100,13 @@
                         %>
                     </tbody>
                 </table>
+                    
+                    <%
+                        }else{
+                            out.println("<div class=\"table-title\"><h3>No quedan entradas para el espectaculo seleccionado.</h3></div>");
+                        }
+                    %>
+                    
             </article>
         </section>>
     </body>

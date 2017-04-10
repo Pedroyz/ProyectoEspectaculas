@@ -25,7 +25,9 @@ public class ConsultaEspectaculo extends ConexionBBDD {
         try {
             Statement st = con.createStatement();
             ResultSet rs = null;
-            String consulta = "SELECT * FROM espectaculo order by Fecha;";
+            String consulta = "SELECT * FROM espectaculo \n" +
+                                "where idespectaculo in (SELECT espectaculoId FROM silla where usuarioId is null)\n" +
+                                "order by Fecha";
             rs = st.executeQuery(consulta);
             while (rs.next()) {
                 Espectaculo espectaculo = new Espectaculo();

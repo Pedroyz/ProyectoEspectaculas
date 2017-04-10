@@ -25,7 +25,7 @@
                 String usuario = new String();
                 if (sesion.getAttribute("usuario") != null && sesion.getAttribute("usuario").toString().length() > 0) {
                     usuario = sesion.getAttribute("usuario").toString();
-                    out.println("<a id=\"logo-header\" href=\"menu.jsp\"><span class=\"site-name\"> Bienvenido " + usuario + "</span></href>");
+                    out.println("<a id=\"logo-header\" href=\"menu.jsp\"><span class=\"site-name\"> Bienvenido " + usuario + "</span></a>");
                 } else {
                     response.sendRedirect("index.jsp");
                 }
@@ -40,6 +40,14 @@
 
         <section id="main-content">
             <article>
+                
+                <%           
+                    ConsultaEspectaculo cons = new ConsultaEspectaculo();
+                    LinkedList<EspectaculosComprados> lista = cons.getEspectaculosComprados(usuario);
+
+                    if(lista.size() > 0){
+                %>
+                
                 <div class="table-title">
                     <h3>Espectaculos comprados</h3>
                 </div>
@@ -58,8 +66,6 @@
                     </thead>
                     <tbody class="table-hover">
                         <%
-                            ConsultaEspectaculo cons = new ConsultaEspectaculo();
-                            LinkedList<EspectaculosComprados> lista = cons.getEspectaculosComprados(usuario);
                             for (int i = 0; i < lista.size(); i++) {
                                 out.println("<form  action =\"borrarEntradas\" method=\"post\">");
                                 out.println("<tr>");
@@ -79,6 +85,13 @@
                         %>
                     </tbody>
                 </table>
+                    
+                <%
+                    }else{
+                        out.println("<div class=\"table-title\"><h3>No tiene ninguna entrada comprada.</h3></div>");
+                    }
+                %>
+                    
             </article>
         </section>>
     </body>

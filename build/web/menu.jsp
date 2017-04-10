@@ -23,7 +23,7 @@
                 HttpSession sesion = request.getSession();
                 if (sesion.getAttribute("usuario") != null && sesion.getAttribute("usuario").toString().length() > 0) {
                     String usuario = sesion.getAttribute("usuario").toString();
-                    out.println("<a id=\"logo-header\" href=\"#\"><span class=\"site-name\"> Bienvenido " + usuario + "</span></href>");
+                    out.println("<a id=\"logo-header\" href=\"#\"><span class=\"site-name\"> Bienvenido " + usuario + "</span></a>");
                 } else {
                     response.sendRedirect("index.jsp");
                 }
@@ -49,6 +49,13 @@
 
     <section id="main-content">
         <article>
+            
+               <%           
+                    ConsultaEspectaculo cons = new ConsultaEspectaculo();
+                    LinkedList<Espectaculo> lista = cons.getEspectaculos();
+                    if(lista.size() > 0){
+                %>
+            
             <div class="table-title">
                 <h3>Espectaculos disponibles</h3>
             </div>
@@ -64,8 +71,6 @@
                 </thead>
                 <tbody class="table-hover">
                     <%
-                        ConsultaEspectaculo cons = new ConsultaEspectaculo();
-                        LinkedList<Espectaculo> lista = cons.getEspectaculos();
                         for (int i = 0; i < lista.size(); i++) {
                             out.println("<form  action =\"DetalleEspectaculo.jsp\" method=\"post\">");
 
@@ -86,6 +91,12 @@
                     %>
                 </tbody>
             </table>
+            <%
+               }else{
+                   out.println("<div class=\"table-title\"><h3>No quedan espectaculos disponibles en este momento.</h3></div>");
+               }
+           %>               
+                
         </article>
     </section>>
 </body>
