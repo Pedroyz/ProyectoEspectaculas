@@ -61,16 +61,18 @@
                             ConsultaEspectaculo cons = new ConsultaEspectaculo();
                             LinkedList<EspectaculosComprados> lista = cons.getEspectaculosComprados(usuario);
                             for (int i = 0; i < lista.size(); i++) {
-                                out.println("<form  action =\"#\" method=\"post\">");
+                                out.println("<form  action =\"borrarEntradas\" method=\"post\">");
                                 out.println("<tr>");
-                                out.println("<td class=\"text-left\">" + lista.get(i).getIdEspectaculo() + "</td>");
+                                out.println("<input type=\"hidden\" name=\"idespectaculo\" value=\"" + lista.get(i).getIdEspectaculo() + "\">");
+                                out.println("<input type=\"hidden\" name=\"tipoSilla\" value=\"" + lista.get(i).getTipo() + "\">");
+                                out.println("<td class=\"text-left\" >" + lista.get(i).getIdEspectaculo() + "</td>");
                                 out.println("<td class=\"text-left\">" + lista.get(i).getNombre() + "</td>");
                                 out.println("<td class=\"text-left\">" + lista.get(i).getDescripcion() + "</td>");
                                 out.println("<td class=\"text-left\">" + lista.get(i).getFecha() + "</td>");
                                 out.println("<td class=\"text-left\">" + lista.get(i).getTipo() + "</td>");
                                 out.println("<td class=\"text-left\">" + lista.get(i).getPrecio() + "</td>");
                                 out.println("<td class=\"text-left\">" + lista.get(i).getNumsillas() + "</td>");
-                                out.println("<td class=\"text-left\"><button  type=\"submit\" name=\"Detalle\" id=\"Boton\" value=\"Detalle\"> Ver destalles</button></td>");
+                                out.println("<td class=\"text-left\"><button  type=\"submit\" name=\"Detalle\" id=\"Boton\" value=\"Detalle\"> Borrar</button></td>");
                                 out.println("</tr>");
                                 out.println("</form>");
                             }

@@ -31,7 +31,7 @@
 
             <nav>
                 <ul>
-                    <li> <a href="comprado.jsp" >Entradas mias</a><li>
+                    <li> <a href="comprado.jsp" >Mis entradas</a><li>
                     <li> <a href="salir" >Salir</a><li>
                 </ul>
             </nav>

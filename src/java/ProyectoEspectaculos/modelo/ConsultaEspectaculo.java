@@ -101,7 +101,6 @@ public class ConsultaEspectaculo extends ConexionBBDD {
                     numCambios = st.executeUpdate(update);
 
                     return false;
-
                 }
 
                 rs.close();
@@ -146,13 +145,37 @@ public class ConsultaEspectaculo extends ConexionBBDD {
         }
         return listaEspectaculos;
     }
-/*
-    public static void main (String argv []) throws SQLException{
+    
+    public boolean borrarSillas(int idespectaculo, String tipoSilla, String usuario) throws SQLException {
+
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = null;
+            int numCambios = 0;
+
+            if(idespectaculo <=0  || tipoSilla == null || tipoSilla.length() == 0 || usuario == null || usuario.length() == 0)
+                return false;
+            //primero seleccinamos las sillas que vamos a comprar
+            String consulta = "UPDATE silla SET usuarioId = NULL where usuarioId = \"" + usuario + "\" and tipo =  \"" + tipoSilla + "\"  and espectaculoId = " + idespectaculo;
+            numCambios = st.executeUpdate(consulta);
+            
+            if(numCambios <= 0)
+                return false;
+
+        } catch (SQLException e) {
+            System.err.println("Error consulta sql");
+            return false;
+        }
+        return true;
+    }
+       
+
+  /*  public static void main (String argv []) throws SQLException{
     
         ConsultaEspectaculo con = new ConsultaEspectaculo();
-        System.out.println(con.comprarSillas(2, "NORMAL", 30, "pedro"));
+        System.out.println(con.borrarSillas(1, "PREMIUM", "pedro"));
     
     
-    }
-    */
+    }*/
+    
 }
