@@ -28,7 +28,7 @@ body {
 	margin: 0;
 	padding: 0;
 	font-family: Helvetica, Arial, sans-serif;
-	color: #666;
+	color: #FFFFFF;
 	background: #0090EA; 
 	font-size: 1em;
 	line-height: 1.5em;
@@ -91,6 +91,15 @@ form input {
     border-radius: 3px;
     outline: none;
     border: 1px solid #ccc;
+}
+
+form.filtroFecha {
+    box-shadow: none;
+    width: 100%;
+    color: white;
+    background: none;
+    font-family: lato;
+    position: relative;
 }
 
 form a {
@@ -218,6 +227,7 @@ tr {
     color:#666B85;
     font-size:16px;
     font-weight:normal;
+    max-height: 20px;
     text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
 }
 
@@ -254,7 +264,7 @@ tr:last-child td:last-child {
 
 td {
     background:#FFFFFF;
-    padding:20px;
+    padding:10px;
     text-align:left;
     vertical-align:middle;
     font-weight:300;
@@ -294,7 +304,7 @@ td.text-right {
 #main-header {
     background: #333;
     color: white;
-    height: 80px;
+    height: 70px;
 }	
 #main-header a {
     color: white;
@@ -334,7 +344,7 @@ nav {
 }
 nav ul {
     margin: 0;
-    padding-top: 20px;
+    padding-top: 10px;
     list-style: none;
     padding-right: 20px;
     width:  120px;
@@ -357,15 +367,10 @@ nav ul li a:hover {
 #main-content {
     background: #0090EA;
     width: 90%;
-    max-width: 800px;
-    margin: 20px auto;
     box-shadow: 0 0 10px rgba(0,0,0,.1);
+    padding: 0 40px 40px 40px;
 }
 
-#main-content header,
-#main-content .content {
-    padding: 40px;
-}
 
 #main-footer {
     background: #333;

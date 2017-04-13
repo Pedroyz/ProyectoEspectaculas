@@ -93,6 +93,6 @@
                 %>
                     
             </article>
-        </section>>
+        </section>
     </body>
 </html>

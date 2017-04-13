@@ -45,6 +45,29 @@ public class ConsultaEspectaculo extends ConexionBBDD {
         return listaEspectaculos;
     }
 
+    public LinkedList<Espectaculo> getFechasDisponibles() throws SQLException {
+        LinkedList<Espectaculo> listaEspectaculos = new LinkedList<>();
+        try {
+            Statement st = con.createStatement();
+            ResultSet rs = null;
+            String consulta = "SELECT distinct Fecha FROM espectaculo \n" +
+                                "where idespectaculo in (SELECT espectaculoId FROM silla where usuarioId is null)\n" +
+                                "order by Fecha";
+            rs = st.executeQuery(consulta);
+            while (rs.next()) {
+                Espectaculo espectaculo = new Espectaculo();
+                espectaculo.setFecha(rs.getDate("Fecha"));
+                listaEspectaculos.add(espectaculo);
+            }
+            rs.close();
+            st.close();
+        } catch (SQLException e) {
+            System.err.println("Error consulta sql");
+        }
+        return listaEspectaculos;
+    }
+    
+    
     public LinkedList<Silla> getSillas(int idespectaculo) throws SQLException {
 
         LinkedList<Silla> listaSillas = new LinkedList<>();
@@ -172,10 +195,10 @@ public class ConsultaEspectaculo extends ConexionBBDD {
     }
        
 
-  /*  public static void main (String argv []) throws SQLException{
+   /* public static void main (String argv []) throws SQLException{
     
         ConsultaEspectaculo con = new ConsultaEspectaculo();
-        System.out.println(con.borrarSillas(1, "PREMIUM", "pedro"));
+        System.out.println(con.getFechasDisponibles());
     
     
     }*/
