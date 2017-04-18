@@ -18,18 +18,48 @@ import com.mysql.jdbc.Connection;
 
 public class ConexionBBDD {
     
-    public static final String USERNAME = "root";
-    public static final String PASSWORD = "contraseniaroot";
-    public static final String HOST = "localhost";
-    public static final String PORT = "3306";
-    public static final String DATABASE = "espectaculos";
-    public static final String CLASSNAME = "com.mysql.jdbc.Driver";
-    public static final String URL = "jdbc:mysql://"+HOST+":"+PORT+"/"+DATABASE;
+    public String USERNAME;
+    public String PASSWORD;
+    public String HOST;
+    public String PORT;
+    public String DATABASE;
+    public String CLASSNAME;
+    public String URL;
     
     public java.sql.Connection con;
-    
+ 
     public ConexionBBDD() throws SQLException{
     
+        this.USERNAME = "root";
+        this.PASSWORD = "contraseniaroot";
+        this.HOST = "localhost";
+        this.PORT = "3306";
+        this.DATABASE = "espectaculos";
+        this.CLASSNAME = "com.mysql.jdbc.Driver";
+        this.URL = "jdbc:mysql://"+HOST+":"+PORT+"/"+DATABASE;
+        
+        try {
+            Class.forName(CLASSNAME);
+            con = DriverManager.getConnection(URL,USERNAME,PASSWORD);
+        }catch(ClassNotFoundException e){
+            System.err.println("Error en la clase:" + e.toString());
+        }catch(SQLException e){
+            System.err.println("Error SQL: "+ e.toString());
+        }
+    
+    }    
+    
+    
+    public ConexionBBDD(String USERNAME, String PASSWORD, String HOST, String PORT, String DATABASE, String CLASSNAME, String URL) throws SQLException{
+    
+        this.USERNAME = USERNAME;
+        this.PASSWORD = PASSWORD;
+        this.HOST = HOST;
+        this.PORT = PORT;
+        this.DATABASE = DATABASE;
+        this.CLASSNAME = CLASSNAME;
+        this.URL = URL;
+        
         try {
             Class.forName(CLASSNAME);
             con = DriverManager.getConnection(URL,USERNAME,PASSWORD);
@@ -42,7 +72,7 @@ public class ConexionBBDD {
     }
     /*
     public static void main(String[] args) throws SQLException {
-        ConexionBBDD cone = new ConexionBBDD();
-    }
-*/
+        ConexionBBDD cone = new ConexionBBDD("root", "contraseniaroot", "localhost", "3306", "espectaculos", "com.mysql.jdbc.Driver", "jdbc:mysql://localhost:3306/espectaculos");
+    }*/
+
 }
